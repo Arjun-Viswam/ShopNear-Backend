@@ -25,5 +25,11 @@ module.exports = {
       res.json({ data, token });
     });
   },
-
+  submitData : (req,res,next) => {
+    console.log("sasi is on fire");
+    console.log(req.body);
+    merchantHelper.submitProduct(req.body).then((res)=> {
+      res.status(100).json({status:true})
+    })
+}
 };

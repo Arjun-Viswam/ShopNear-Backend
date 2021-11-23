@@ -28,6 +28,7 @@ module.exports = {
   signup: (data) => {
     return new Promise(async (resolve, reject) => {
       data.password = await bcrypt.hash(data.password, 10);
+      data.block = true
       db.get()
         .collection(collection.USER_COLLECTION)
         .insertOne(data)
@@ -47,18 +48,21 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       let response = {};
       let user = await db
-        .get()
+        .get()  
         .collection(collection.USER_COLLECTION)
         .findOne({ email: userData.email });
       if (user) {
+        console.log("sssssssssssss");
         bcrypt.compare(userData.password, user.password).then((status) => {
+          console.log("kkkkkkkkkkkkkkkkkkkk");
           if (status) {
             if (user.block) {
-              response.block = true;
+              response.block = true;  
               resolve(response);
             } else {
               response.user = user;
               response.status = true;
+              console.log(response);
               resolve(response);
             }
           } else {

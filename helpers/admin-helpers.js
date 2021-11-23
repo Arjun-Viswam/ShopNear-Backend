@@ -24,7 +24,61 @@ module.exports = {
         });
       } else {
         resolve({ status: false });
-      }
+      } 
     });
+  },
+  manageShop:()=>{
+    return new Promise((resolve,reject)=>{
+      db.get().collection(collection.MERCHANTS_COLLECTION).find().toArray().then((data)=>{
+        resolve(data)
+      })
+    })
+  },
+  blockShop:(shopID)=>{
+    return new Promise((resolve,reject)=>{
+      db.get().collection(collection.MERCHANTS_COLLECTION).updateOne({_id:objectId(shopID)},
+      {
+        $set:{"block":true}
+      }).then(()=>{
+        resolve()
+      })
+    })
+  },
+  unblockShop : (shopID)=>{
+    return new Promise((resolve,reject)=>{
+      db.get().collection(collection.MERCHANTS_COLLECTION).updateOne({_id:objectId(shopID)},
+      {
+        $set:{"block":false}
+      }).then(()=>{
+        resolve()
+      })
+    })
+  },
+  manageUser : () => {
+    return new Promise((resolve,reject)=>{
+      db.get().collection(collection.USER_COLLECTION).find().toArray().then((users)=>{
+        resolve(users)
+      })
+    })
+  },
+  blockUser:(userID)=>{
+    return new Promise((resolve,reject)=>{
+      db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userID)},
+      {
+        $set:{"block":true}
+      }).then(()=>{
+        resolve()
+      })
+    })
+  },
+  unblockUser : (userID)=>{
+    return new Promise((resolve,reject)=>{
+      db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userID)},
+      {
+        $set:{"block":false}
+      }).then(()=>{
+        resolve()
+      })
+    })
   },
 };

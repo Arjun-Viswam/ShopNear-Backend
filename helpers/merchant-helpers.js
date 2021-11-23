@@ -28,6 +28,7 @@ module.exports = {
   signup: (data) => {
     return new Promise(async (resolve, reject) => {
       data.password = await bcrypt.hash(data.password, 10);
+      data.block = false
       db.get()
         .collection(collection.MERCHANTS_COLLECTION)
         .insertOne(data)
@@ -70,5 +71,9 @@ module.exports = {
       }
     });
   },
- 
+  submitProduct : (data)=>{
+    return new Promise((resolve,reject)=>{
+      resolve()
+    })
+  }
 };
